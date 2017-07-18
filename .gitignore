@@ -1,0 +1,11 @@
+public/assets
+public/storage
+public/hot
+public/mix.js
+public/mix.*.js
+public/mix-manifest.json
+node_modules
+storage
+!.gitkeep
+.env
+npm-debug.log
