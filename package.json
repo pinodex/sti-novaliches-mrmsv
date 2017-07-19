@@ -28,7 +28,9 @@
     "adonis-framework": "^3.0.10",
     "adonis-lucid": "^3.0.14",
     "adonis-middleware": "^1.0.11",
+    "adonis-validation-provider": "^3.0.5",
     "adonis-websocket": "^1.0.3",
+    "mysql": "^2.13.0",
     "youch": "^2.0.4"
   },
   "standard": {
@@ -44,7 +46,7 @@
     "bulma": "^0.4.3",
     "cross-env": "^5.0.1",
     "laravel-mix": "^1.2.2",
-    "material-design-icons": "^3.0.1",
+    "font-awesome": "^4.7.0",
     "nodemon": "^1.11.0",
     "standard": "^10.0.1",
     "vue": "^2.4.1"

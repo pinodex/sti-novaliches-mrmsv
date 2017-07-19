@@ -2,8 +2,6 @@
 
 const Env = use('Env')
 const Youch = use('youch')
-const Helpers = use('Helpers')
-const View = use('Adonis/Src/View')
 const Http = exports = module.exports = {}
 
 const path = require('path')
@@ -42,7 +40,28 @@ Http.handleError = function * (error, request, response) {
  * starting http server.
  */
 Http.onStart = function () {
-  View.filter('mix', text => {
+  const Helpers = use('Helpers')
+  const Config = use('Config')
+  const Route = use('Route')
+  const View = use('View')
+
+  View.global('url', (route, data) => {
+    data = data || {}
+
+    return Route.url(route, data)
+  })
+
+  View.global('route', (route, data) => {
+    data = data || {}
+
+    return Route.url(route, data)
+  })
+
+  View.global('config', key => {
+    return Config.get(key)
+  })
+
+  View.global('mix', text => {
     if (!text) {
       return
     }

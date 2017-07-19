@@ -18,12 +18,13 @@ let options = {
 mix
   .sass('resources/assets/sass/main.scss', 'public/assets/css')
   .sass('resources/assets/sass/bulma.scss', 'public/assets/css')
+  .sass('node_modules/font-awesome/scss/font-awesome.scss', 'public/assets/css')
 
   .js('resources/assets/js/app.js', 'public/assets/js')
 
   .copy('resources/assets/img', 'public/assets/img')
   .copy('resources/assets/icon', 'public/assets/icon')
-  .copy('node_modules/material-design-icons/iconfont', 'public/assets/fonts')
+  .copy('node_modules/font-awesome/fonts', 'public/assets/fonts')
 
   .extract(['vue'])
 

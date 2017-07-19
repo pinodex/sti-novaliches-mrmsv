@@ -25,9 +25,9 @@ module.exports = {
   | Cookie name is required even if you are not using cookie driver.
   |
   */
-  cookie: 'adonis-session',
+  cookie: 'session',
 
-  
+
   /*
   |--------------------------------------------------------------------------
   | Redis options
@@ -48,7 +48,7 @@ module.exports = {
     db: 0
   },
 
-  
+
   /*
   |--------------------------------------------------------------------------
   | Session Age
