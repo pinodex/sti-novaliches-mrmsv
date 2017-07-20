@@ -1,0 +1,93 @@
+{% extends '../../layouts/dashboard' %}
+
+{% set page_title = 'Candidates' %}
+{% set active_menu = 'candidates' %}
+
+{% block subcontent %}
+  <section class="hero is-light has-contents-below">
+    <div class="hero-body">
+      <div class="container is-fluid">
+        <div class="level">
+          <div class="level-left">
+            <h1 class="title">Candidates</h1>
+          </div>
+
+          <div class="level-right">
+            <a href="{{ route('dashboard.candidates.add') }}" class="button is-primary">
+              <span class="icon is-small">
+                <i class="fa fa-plus"></i>
+              </span>
+
+              <span>Add Candidate</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container is-fluid">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th class="is-fit">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for candidate in result.toJSON() %}
+          <tr>
+            <td>
+              <div class="media user">
+                <div class="media-left">
+                  <figure class="image is-48x48">
+                    <img src="/storage/{{ candidate.thumb_path }}" alt="Candidate Photo" />
+                  </figure>
+                </div>
+
+                <div class="media-content">
+                  <h1 class="title is-4">{{ candidate.name }}</h1>
+                    {% if candidate.category %}
+                      <h2 class="subtitle is-6">
+                        <a href="{{ route('dashboard.categories.edit', { id: candidate.category.id }) }}">
+                          {{ candidate.category.name }}
+                        </a>
+                      </h2>
+                    {% else %}
+                      <h2 class="subtitle is-6">
+                        <em>Unassigned</em>
+                      </h2>
+                    {% endif %}
+                  </div>
+              </div>
+            </td>
+            <td>
+              <div class="field is-grouped">
+                <p class="control">
+                  <a href="{{ route('dashboard.candidates.edit', { id: candidate.id }) }}" class="button is-primary is-small is-inverted">
+                    <span class="icon is-small">
+                      <i class="fa fa-pencil"></i>
+                    </span>
+                  </a>
+                </p>
+
+                <p class="control">
+                  <a href="{{ route('dashboard.candidates.delete', { id: candidate.id }) }}" class="button is-danger is-small is-inverted">
+                    <span class="icon is-small">
+                      <i class="fa fa-times"></i>
+                    </span>
+                  </a>
+                </p>
+              </div>
+            </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="3">No results found</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

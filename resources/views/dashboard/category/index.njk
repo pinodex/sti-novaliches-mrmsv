@@ -1,7 +1,7 @@
 {% extends '../../layouts/dashboard' %}
 
-{% set page_title = 'Accounts' %}
-{% set active_menu = 'accounts' %}
+{% set page_title = 'Categories' %}
+{% set active_menu = 'categories' %}
 
 {% block subcontent %}
   <section class="hero is-light has-contents-below">
@@ -9,16 +9,16 @@
       <div class="container is-fluid">
         <div class="level">
           <div class="level-left">
-            <h1 class="title">Accounts</h1>
+            <h1 class="title">Categories</h1>
           </div>
 
           <div class="level-right">
-            <a href="{{ route('dashboard.accounts.add') }}" class="button is-primary">
+            <a href="{{ route('dashboard.categories.add') }}" class="button is-primary">
               <span class="icon is-small">
                 <i class="fa fa-plus"></i>
               </span>
 
-              <span>Add Account</span>
+              <span>Add Category</span>
             </a>
           </div>
         </div>
@@ -31,20 +31,18 @@
       <thead>
         <tr>
           <th>Name</th>
-          <th>Username</th>
           <th class="is-fit">Actions</th>
         </tr>
       </thead>
 
       <tbody>
-        {% for account in accounts.toJSON() %}
+        {% for category in result.toJSON() %}
           <tr>
-            <td>{{ account.name }}</td>
-            <td>{{ account.username }}</td>
+            <td>{{ category.name }}</td>
             <td>
               <div class="field is-grouped">
                 <p class="control">
-                  <a href="{{ route('dashboard.accounts.edit', { id: account.id }) }}" class="button is-primary is-small is-inverted">
+                  <a href="{{ route('dashboard.categories.edit', { id: category.id }) }}" class="button is-primary is-small is-inverted">
                     <span class="icon is-small">
                       <i class="fa fa-pencil"></i>
                     </span>
@@ -52,7 +50,7 @@
                 </p>
 
                 <p class="control">
-                  <a href="{{ route('dashboard.accounts.delete', { id: account.id }) }}" class="button is-danger is-small is-inverted">
+                  <a href="{{ route('dashboard.categories.delete', { id: category.id }) }}" class="button is-danger is-small is-inverted">
                     <span class="icon is-small">
                       <i class="fa fa-times"></i>
                     </span>
@@ -60,6 +58,10 @@
                 </p>
               </div>
             </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="3">No results found</td>
           </tr>
         {% endfor %}
       </tbody>

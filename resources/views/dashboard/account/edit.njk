@@ -5,9 +5,9 @@
 
 {% set formUrl = url('dashboard.accounts.add') %}
 
-{% if account.id %}
+{% if model.id %}
   {% set page_title = 'Edit Account' %}
-    {% set formUrl = url('dashboard.accounts.edit', { id: account.id }) %}
+    {% set formUrl = url('dashboard.accounts.edit', { id: model.id }) %}
 {% endif %}
 
 {% block subcontent %}
@@ -16,7 +16,7 @@
       <div class="container is-fluid">
         <div class="level">
           <div class="level-left">
-            {% if account.id %}
+            {% if model.id %}
               <h1 class="title">Edit Account</h1>
             {% else %}
               <h1 class="title">Add Account</h1>
@@ -49,14 +49,14 @@
             <div class="field">
               <label class="label">Name</label>
               <div class="control">
-                <input class="input" type="text" name="name" value="{{ old('name', account.name) }}" required />
+                <input class="input" type="text" name="name" value="{{ old('name', model.name) }}" required />
               </div>
             </div>
 
             <div class="field">
               <label class="label">Username</label>
               <div class="control">
-                <input class="input" type="text" name="username" value="{{ old('username', account.username) }}" required />
+                <input class="input" type="text" name="username" value="{{ old('username', model.username) }}" required />
               </div>
             </div>
 
@@ -64,12 +64,16 @@
               <label class="label">
                 Password
 
-                {% if account.id %}
+                {% if model.id %}
                   <small>(Leave blank if not changing)</small>
                 {% endif %}
               </label>
               <div class="control">
-                <input class="input" type="password" name="password" required />
+                {% if model.id %}
+                  <input class="input" type="password" name="password" />
+                {% else %}
+                  <input class="input" type="password" name="password" required />
+                {% endif %}
               </div>
             </div>
 
@@ -77,12 +81,16 @@
               <label class="label">
                 Confirm Password
 
-                {% if account.id %}
+                {% if model.id %}
                   <small>(Leave blank if not changing)</small>
                 {% endif %}
               </label>
               <div class="control">
-                <input class="input" type="password" name="password_confirm" required />
+                {% if model.id %}
+                  <input class="input" type="password" name="password_confirm" />
+                {% else %}
+                  <input class="input" type="password" name="password_confirm" required />
+                {% endif %}
               </div>
             </div>
 

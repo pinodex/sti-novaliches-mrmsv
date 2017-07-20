@@ -1,7 +1,7 @@
 {% extends '../../layouts/dashboard' %}
 
-{% set page_title = 'Delete Account' %}
-{% set active_menu = 'accounts' %}
+{% set page_title = 'Delete Candidate' %}
+{% set active_menu = 'candidates' %}
 
 {% block subcontent %}
   <section class="hero is-danger has-contents-below">
@@ -9,7 +9,7 @@
       <div class="container is-fluid">
         <div class="level">
           <div class="level-left">
-            <h1 class="title">Delete Account</h1>
+            <h1 class="title">Delete Candidate</h1>
           </div>
 
           <div class="level-right">
@@ -25,7 +25,7 @@
       <div class="column is-4 is-offset-4">
         <article class="message is-danger">
           <div class="message-header">
-            <p>Delete Account</p>
+            <p>Delete Candidate</p>
           </div>
 
           <div class="message-body">
@@ -33,13 +33,14 @@
               {{ csrfField }}
 
               <div class="has-contents-below">
-                <p>Are you sure you want to delete this account?</p>
+                <p>Are you sure you want to delete this candidate?</p>
+                <p><strong>{{ model.name }}</strong></p>
               </div>
 
               <div class="is-clearfix">
                 <div class="field is-grouped is-pulled-right">
                   <p class="control">
-                    <a href="{{ route('dashboard.accounts') }}" class="button is-light">
+                    <a href="{{ route('dashboard.candidates') }}" class="button is-light">
                       <span>Cancel</span>
                     </a>
                   </p>

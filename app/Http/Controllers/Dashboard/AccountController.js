@@ -10,24 +10,24 @@
 const Account = use('App/Model/Account')
 const Validator = use('Validator')
 
-class AccountsController {
+class AccountController {
   * index (request, response) {
     const accounts = yield Account.all()
 
-    yield response.sendView('dashboard/accounts/index', {
-      accounts: accounts
+    yield response.sendView('dashboard/account/index', {
+      result: accounts
     })
   }
 
   * edit (request, response) {
     const paramId = request.param('id')
-    let account = new Account()
+    let model = new Account()
 
     if (paramId) {
-      account = yield Account.find(paramId)
+      model = yield Account.find(paramId)
     }
 
-    if (account == null) {
+    if (model == null) {
       yield request.with({ error: 'Cannot find requested account' }).flash()
 
       response.route('dashboard.accounts')
@@ -42,13 +42,13 @@ class AccountsController {
         'password_confirm',
       ])
 
-      const validation = yield Validator.validate(data, Account.rules(account.id), Account.validationMessages)
+      const validation = yield Validator.validate(data, Account.rules(model.id), Account.validationMessages)
 
       if (validation.fails()) {
         yield request.withAll().andWith({ errors: validation.messages() }).flash()
 
-        if (account.id) {
-          response.route('dashboard.accounts.edit', { id: account.id })
+        if (model.id) {
+          response.route('dashboard.accounts.edit', { id: model.id })
           return
         }
 
@@ -62,24 +62,22 @@ class AccountsController {
         delete data['password']
       }
 
-      account.fill(data)
+      model.fill(data)
 
-      yield account.save()
-      yield request.with({ success: '`Changes to ${account.name} has been saved`' }).flash()
+      yield model.save()
+      yield request.with({ success: `Changes to ${model.name} has been saved` }).flash()
 
       response.route('dashboard.accounts')
       return
     }
 
-    yield response.sendView('dashboard/accounts/edit', {
-      account: account
-    })
+    yield response.sendView('dashboard/account/edit', { model })
   }
 
   * delete (request, response) {
-    const account = yield Account.find(request.param('id'))
+    const model = yield Account.find(request.param('id'))
 
-    if (account == null) {
+    if (model == null) {
       yield request.with({ error: 'Cannot find requested account' }).flash()
 
       response.route('dashboard.accounts')
@@ -87,16 +85,14 @@ class AccountsController {
     }
 
     if (request.method() == 'POST') {
-      yield account.delete()
-      yield request.with({ success: `${account.name} account has been deleted` }).flash()
+      yield model.delete()
+      yield request.with({ success: `${model.name} account has been deleted` }).flash()
 
       response.route('dashboard.accounts')
     }
 
-    yield response.sendView('dashboard/accounts/delete', {
-      account: account
-    })
+    yield response.sendView('dashboard/account/delete', { model })
   }
 }
 
-module.exports = AccountsController
+module.exports = AccountController

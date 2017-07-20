@@ -14,4 +14,18 @@ export default {
       this.ui.nav.sideBarActive = false
     },
 
+    previewImage: function (e) {
+      const input = e.target
+
+      if (input.files && input.files[0]) {
+        let reader = new FileReader()
+
+        reader.onload = e => {
+          this.form.image = e.target.result
+        }
+
+        reader.readAsDataURL(input.files[0])
+      }
+    }
+
 }

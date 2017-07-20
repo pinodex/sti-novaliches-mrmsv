@@ -31,7 +31,8 @@ let app = new Vue({
 
             form: {
                 disabled: false,
-                errors: false
+                errors: false,
+                image: null
             }
         }
     },

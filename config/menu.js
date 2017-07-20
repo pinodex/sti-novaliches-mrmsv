@@ -16,7 +16,21 @@ module.exports = [
         identifier: 'accounts',
         route: 'dashboard.accounts',
         name: 'Accounts'
+      },
+
+      {
+        icon: 'folder',
+        identifier: 'categories',
+        route: 'dashboard.categories',
+        name: 'Categories'
+      },
+
+      {
+        icon: 'male',
+        identifier: 'candidates',
+        route: 'dashboard.candidates',
+        name: 'Candidates'
       }
     ]
-  },
+  }
 ]

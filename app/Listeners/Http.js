@@ -61,6 +61,10 @@ Http.onStart = function () {
     return Config.get(key)
   })
 
+  View.global('storage', file => {
+    return Helpers.storagePath(file)
+  })
+
   View.global('mix', text => {
     if (!text) {
       return
