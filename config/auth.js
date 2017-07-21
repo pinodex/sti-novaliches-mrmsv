@@ -17,22 +17,19 @@ module.exports = {
   | Available Serializers - Lucid, Database
   |
   */
-  authenticator: 'session',
+  authenticator: 'account',
 
-  /*
-  |--------------------------------------------------------------------------
-  | Session Authenticator
-  |--------------------------------------------------------------------------
-  |
-  | Session authenticator will make use of sessions to maintain the login
-  | state for a given user.
-  |
-  */
-  session: {
+  account: {
     serializer: 'Lucid',
     model: 'App/Model/Account',
     scheme: 'session',
     uid: 'username',
     password: 'password'
+  },
+
+  user: {
+    serializer: 'Lucid',
+    model: 'App/Model/User',
+    scheme: 'social'
   }
 }

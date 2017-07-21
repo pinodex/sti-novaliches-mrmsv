@@ -20,7 +20,13 @@
 |
 */
 
-const Ioc = require('adonis-fold').Ioc
+const Ioc = use('adonis-fold').Ioc
+
+Ioc.extend('Adonis/Src/AuthManager', 'social', app => {
+  const SocialScheme = use('App/Components/Scheme/SocialScheme')
+
+  return SocialScheme
+}, 'scheme')
 
 Ioc.bind('App/Addons/Facebook', app => {
   const Config = app.use('Adonis/Src/Config'),

@@ -9,7 +9,6 @@ import Buefy from 'buefy'
 import axios from 'axios'
 
 import io from 'adonis-websocket-client'
-import objectFitImages from 'object-fit-images'
 
 import methods from './methods.js'
 
@@ -37,6 +36,13 @@ Vue.use(Ws, SOCKET_URL, {})
 
 let app = new Vue({
   el: '#app',
+
+  mounted: function () {
+    if ('user' in window && window.user) {
+      this.ui.modal.showLoginPrompt = false
+      this.user = user
+    }
+  },
 
   data: function () {
     return {
@@ -69,9 +75,9 @@ let app = new Vue({
   methods
 })
 
-let client = app.$io.channel('result')
+app.$client = app.$io.channel('result')
 
-client.connect((error, connected) => {
+app.$client.connect((error, connected) => {
   if (error) {
     this.$toast.open('Cannot connect to server. Please try again', {
       type: 'is-danger',
@@ -82,12 +88,17 @@ client.connect((error, connected) => {
   }
 
   if (connected) {
-    client.emit('update')
+    app.$client.emit('update')
   }
 })
 
-client.on('data', data => {
+app.$client.on('data', data => {
   app.entries = data
 })
 
-objectFitImages('video.video-background')
+app.$client.on('candidate.inc', data => {
+  let catId = data.category_id,
+      canId = data.candidate_id
+
+  app.entries[catId].candidates[canId].votes++
+})

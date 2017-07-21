@@ -282,6 +282,16 @@ body {
     background: #f5f5f5;
 }
 
+.vote-count {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+.vote-button.is-success {
+    pointer-events: none;
+}
+
 /**
  * Transitions
  */

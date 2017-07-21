@@ -30,6 +30,34 @@ export default {
       }
     },
 
+    vote: function (categoryId, candidateId) {
+      this.$dialog.confirm({
+        message: `Confirm vote to ${this.entries[categoryId].candidates[candidateId].name}?`,
+        onConfirm: () => {
+          axios.post('/vote', { candidate_id: candidateId }).then(response => {
+            this.user.categories.push(Number(categoryId))
+            this.user.candidates.push(Number(candidateId))
+          })
+        }
+      })
+    },
+
+    isVoted: function (candidateId) {
+      if (this.user == null) {
+        return false
+      }
+
+      return this.user.candidates.indexOf(candidateId) > -1
+    },
+
+    isCategoryTaken: function (categoryId) {
+      if (this.user == null) {
+        return true
+      }
+
+      return this.user.categories.indexOf(categoryId) > -1
+    },
+
     fbLoginFromModal: function () {
       this.ui.modal.showLoginPrompt = false
 
@@ -69,6 +97,17 @@ export default {
         }
 
         this.user = response.data.user
+      })
+    },
+
+    logout: function (el) {
+      this.$dialog.confirm({
+        message: 'Are you sure you want to logout?',
+        onConfirm: () => {
+          axios.get('/auth/logout').then(response => {
+            this.user = null
+          })
+        }
       })
     }
 

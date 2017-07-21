@@ -1,18 +1,14 @@
 'use strict'
 
-const co = require('co')
-const fb = use('App/Addons/Facebook')
-const User = use('App/Model/User')
+const User = use('App/Model/User'),
+      UserTransformer = use('App/Components/UserTransformer'),
+      fb = use('App/Addons/Facebook'),
+      co = require('co')
 
 class AuthController {
-  * index (request, response) {
-
-  }
 
   * login (request, response) {
-    fb.options({
-      accessToken: request.input('access_token')
-    })
+    fb.options({ accessToken: request.input('access_token') })
 
     fb.api('/me', { fields: ['id', 'name', 'picture', 'verified'] })
       .then(res => {
@@ -27,27 +23,32 @@ class AuthController {
         }
 
         co(function* () {
-          let user = yield User.query().where('facebook_id', res.id).first()
-
-          if (!user) {
-            user = new User()
+          const props = {
+            fbid: res.id,
+            name: res.name,
+            avatar: res.picture.data.url
           }
 
-          user.facebook_id = res.id
-          user.picture_url = res.picture.data.url
-          user.name = res.name
+          const user = yield User.findOrCreate({ fbid: res.id }, props)
+
+          yield user.related('votes').load()
+
+          user.fill(props)
 
           yield user.save()
-        })
+          yield request.auth
+            .authenticator('user')
+            .loginViaId(user.id)
 
-        response.send({
-          user: res
-        })
+          response.send({ user: yield UserTransformer.transform(user) })
       })
+    })
   }
 
   * logout (request, response) {
+    yield request.auth.authenticator('user').logout()
 
+    response.status(204).send()
   }
 }
 

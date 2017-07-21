@@ -1,22 +1,28 @@
 'use strict'
 
-const Category = use('App/Model/Category')
+const Event = use('Event'),
+      VoteResult = use('App/Components/VoteResult'),
+      co = require('co')
 
 class ResultController {
 
-  constructor (socket) {
+  constructor (socket, request, presence) {
     this.socket = socket
+
+    if (!Event.hasListeners('candidate.inc')) {
+      Event.when('candidate.inc', candidate => {
+        this.socket.toEveryone().emit('candidate.inc', {
+          candidate_id: candidate.id,
+          category_id: candidate.category_id
+        })
+      })
+    }
   }
 
   * onUpdate () {
-    const categories = yield Category.with('candidates').fetch()
-    let output = []
+    const result = yield VoteResult.get()
 
-    categories.each(category => {
-      output.push(category.toJSON())
-    })
-
-    this.socket.toMe().emit('data', output)
+    this.socket.toMe().emit('data', result)
   }
 
 }

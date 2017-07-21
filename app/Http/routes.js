@@ -17,22 +17,33 @@
 
 const Route = use('Route')
 
-Route.get('/', 'MainController.index')
+Route
+  .get('/', 'MainController.index')
+  .as('index')
 
-Route.group('auth', function () {
+Route
+  .post('/vote', 'MainController.vote')
+  .as('vote')
+  .middleware('auth:user')
+
+Route.group('auth', () => {
 
   Route
-    .get('/', 'AuthController.index')
     .post('/login', 'AuthController.login')
+    .as('auth.login')
+
+  Route
+    .get('/logout', 'AuthController.logout')
+    .as('auth.logout')
 
 }).prefix('auth')
 
-Route.group('dashboard', function () {
+Route.group('dashboard', () => {
 
   Route
     .get('/', 'Dashboard/MainController.index')
     .as('dashboard.index')
-    .middleware('auth')
+    .middleware('auth:account')
 
   Route
     .route('login', ['GET', 'POST'], 'Dashboard/MainController.login')
@@ -41,7 +52,7 @@ Route.group('dashboard', function () {
   Route
     .get('logout', 'Dashboard/MainController.logout')
     .as('dashboard.logout')
-    .middleware('auth')
+    .middleware('auth:account')
 
 })
 .prefix('dashboard')
@@ -49,7 +60,7 @@ Route.group('dashboard', function () {
 /**
  * Accounts
  */
-Route.group('dashboard.accounts', function () {
+Route.group('dashboard.accounts', () => {
 
   Route
     .get('/', 'Dashboard/AccountController.index')
@@ -69,12 +80,12 @@ Route.group('dashboard.accounts', function () {
 
 })
 .prefix('dashboard/accounts')
-.middleware('auth')
+.middleware('auth:account')
 
 /**
  * Categories
  */
-Route.group('dashboard.categories', function () {
+Route.group('dashboard.categories', () => {
 
   Route
     .get('/', 'Dashboard/CategoryController.index')
@@ -94,12 +105,12 @@ Route.group('dashboard.categories', function () {
 
 })
 .prefix('dashboard/categories')
-.middleware('auth')
+.middleware('auth:account')
 
 /**
  * Candidates
  */
-Route.group('dashboard.candidates', function () {
+Route.group('dashboard.candidates', () => {
 
   Route
     .get('/', 'Dashboard/CandidateController.index')
@@ -119,4 +130,4 @@ Route.group('dashboard.candidates', function () {
 
 })
 .prefix('dashboard/candidates')
-.middleware('auth')
+.middleware('auth:account')

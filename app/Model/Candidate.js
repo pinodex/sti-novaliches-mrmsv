@@ -18,6 +18,10 @@ class Candidate extends Lucid {
   category () {
     return this.belongsTo('App/Model/Category')
   }
+
+  votes () {
+    return this.hasMany('App/Model/Vote')
+  }
 }
 
 module.exports = Candidate
