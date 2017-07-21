@@ -10,6 +10,10 @@ body {
     overflow-x: initial;
     background: #f6f9fc;
 
+    &.main-page {
+        background: #fff;
+    }
+
     &.login-page {
         background: #f1f1f1;
     }
@@ -26,6 +30,10 @@ body {
 /**
  * Overrides
  */
+[v-if], [v-else], [v-show], b-modal {
+    display: none;
+}
+
 .box {
     border-radius: 2px;
 }
@@ -47,6 +55,43 @@ body {
             font-size: 1rem;
             font-weight: 400;
         }
+    }
+}
+
+.has-video-background {
+    position: relative;
+
+    & > .video-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        width: 100%;
+        height: auto;
+        max-height: 100%;
+
+        object-fit: cover;
+    }
+
+    & > .overlay {
+        background-image: -moz-linear-gradient(top, rgba(0, 109, 183, 0.5), #006db7);
+        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(0, 109, 183, 0.5)), to(#006db7));
+        background-image: -webkit-linear-gradient(top, rgba(0, 109, 183, 0.5), #006db7);
+        background-image: -o-linear-gradient(top, rgba(0, 109, 183, 0.5), #006db7);
+        background-image: linear-gradient(to bottom, rgba(0, 109, 183, 0.5), #006db7);
+        background-repeat: repeat-x;
+
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    & > .container {
+        z-index: 10;
     }
 }
 

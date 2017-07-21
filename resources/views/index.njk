@@ -1,0 +1,130 @@
+{% extends './layouts/main' %}
+
+{% set page_title = 'Mr. and Ms. STI 2017' %}
+{% set body_class = 'main-page' %}
+
+{% block content %}
+  <section class="hero is-dark is-bold has-contents-below">
+    <div class="hero-body">
+      <div class="container">
+        <div class="level">
+          <div class="level-left">
+            <div class="media">
+              <div class="media-left">
+                <figure class="image">
+                  <img src="/assets/img/logo-100.png" alt="Logo" />
+                </figure>
+              </div>
+
+              <div class="media-content">
+                <h1 class="title">Mr. and Ms. STI 2017</h1>
+                <h2 class="subtitle">Vote for Netizen&lsquo;s Choice Award</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="level-right">
+            <div v-if="user == null">
+              <button class="button is-info"
+                @click="fbLogin"
+                :disabled="ui.button.fbLoginDisabled"
+                :class="{'is-loading': ui.button.fbLoginDisabled}">
+
+                <span class="icon is-small">
+                  <i class="fa fa-facebook"></i>
+                </span>
+
+                <span>Login with Facebook</span>
+              </button>
+            </div>
+
+            <div v-else>
+              <div class="media user">
+                <div class="media-content">
+                  <h2 class="subtitle has-text-right">Logged in as</h2>
+                  <h1 class="title has-text-right">{{ '{{ user.name }}' }}</h1>
+
+                  <h2 class="subtitle has-text-right">
+                    <a href="{{ route('auth.logout') }}">
+                      <span class="icon is-small">
+                        <i class="fa fa-sign-out"></i>
+                      </span>
+
+                      <small>Logout</small>
+                    </a>
+                  </h2>
+                </div>
+
+                <div class="media-right">
+                  <figure class="image is-64x64">
+                    <img :src="user.picture.data.url" />
+                  </figure>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container has-contents-below">
+    <div class="columns" v-for="category in entries">
+      <div class="column">
+        <h1 class="title">{{ '{{ category.name }}' }}</h1>
+
+        <div class="columns">
+          <div class="column" v-for="candidate in category.candidates">
+            <div class="card">
+              <div class="card-image">
+                <figure class="image is-1by1">
+                  <img :src="'/storage/' + candidate.picture_path" alt="Image" />
+                </figure>
+              </div>
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-content">
+                    <p class="title is-4">{{ '{{ candidate.name }}' }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <p>
+
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <b-modal :active.sync="ui.modal.showLoginPrompt" :width="480">
+    <div class="card">
+      <header class="card-header">
+        <p class="card-header-title">Login with Facebook</p>
+      </header>
+
+      <div class="card-content">
+        <div class="content">
+          <p>To vote for your netizen&lsquo;s choice, please login with your Facebook account.</p>
+        </div>
+      </div>
+      <footer class="card-footer">
+        <a href="#" class="card-footer-item" @click.prevent="fbLoginFromModal">
+          <span class="icon is-small">
+            <i class="fa fa-facebook"></i>
+          </span>
+
+          <span>Login with Facebook</span>
+        </a>
+      </footer>
+    </div>
+  </b-modal>
+{% endblock %}

@@ -19,3 +19,18 @@
 | })
 |
 */
+
+const Ioc = require('adonis-fold').Ioc
+
+Ioc.bind('App/Addons/Facebook', app => {
+  const Config = app.use('Adonis/Src/Config'),
+        appId = Config.get('facebook.app_id'),
+        appSecret = Config.get('facebook.app_secret'),
+        {Facebook, FacebookApiException} = require('fb')
+
+  let fb = new Facebook({ appId, appSecret,
+    version: 'v2.10'
+  })
+
+  return fb
+})

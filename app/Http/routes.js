@@ -17,7 +17,15 @@
 
 const Route = use('Route')
 
-Route.on('/').render('welcome')
+Route.get('/', 'MainController.index')
+
+Route.group('auth', function () {
+
+  Route
+    .get('/', 'AuthController.index')
+    .post('/login', 'AuthController.login')
+
+}).prefix('auth')
 
 Route.group('dashboard', function () {
 
