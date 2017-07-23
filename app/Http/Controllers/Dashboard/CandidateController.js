@@ -71,8 +71,8 @@ class CandidateController {
 
       Jimp.read(picture.tmpPath())
         .then(image => {
-          image.resize(1000, 1000).quality(90).write(`${Helpers.storagePath()}/public/${pictureName}`)
-          image.resize(128, 128).quality(60).write(`${Helpers.storagePath()}/public/${thumbName}`)
+          image.resize(512, 512).quality(90).write(`${Helpers.storagePath()}/public/${pictureName}`)
+          image.resize(128, 128).quality(75).write(`${Helpers.storagePath()}/public/${thumbName}`)
         })
 
       model.picture_path = pictureName
