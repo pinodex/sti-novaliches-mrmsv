@@ -45,6 +45,11 @@ export default {
         .then(response => {
           this.user.categories.push(candidate.category_id)
           this.user.candidates.push(candidate.id)
+
+          this.$toast.open({
+            message: `Your vote to ${candidate.name} has been submitted!`,
+            type: 'is-success'
+          })
         })
         .catch(error => {
           if (!error.response) {
