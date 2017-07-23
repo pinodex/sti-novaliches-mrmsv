@@ -32,7 +32,7 @@ Vue.use(Buefy, {
   defaultIconPack: 'fa'
 })
 
-Vue.use(Ws, SOCKET_URL, {})
+Vue.use(Ws, window.location.origin, {})
 
 let app = new Vue({
   el: '#app',
