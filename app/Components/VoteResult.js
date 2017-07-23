@@ -19,6 +19,12 @@ class VoteResult {
         candidates: {}
       }
 
+      if (category.relations.candidates instanceof Array) {
+        result[category.id] = entry
+
+        return true
+      }
+
       category.relations.candidates.values().each(candidate => {
         let totalVotes = 0
 
