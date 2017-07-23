@@ -38,7 +38,11 @@
           <div class="columns">
             <div class="column">
               <figure class="image is-square candidate-picture">
-                <img :src="form.image" />
+                {% if model.picture_path %}
+                  <img src="{{ '/storage/' + model.picture_path }}" />
+                {% else %}
+                  <img :src="form.image" />
+                {% endif %}
               </figure>
             </div>
 
