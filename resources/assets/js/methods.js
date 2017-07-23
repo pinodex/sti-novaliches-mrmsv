@@ -32,12 +32,29 @@ export default {
 
     vote: function (categoryId, candidateId) {
       this.$dialog.confirm({
+        title: 'Confirm Vote',
         message: `Confirm vote to ${this.entries[categoryId].candidates[candidateId].name}?`,
         onConfirm: () => {
-          axios.post('/vote', { candidate_id: candidateId }).then(response => {
-            this.user.categories.push(Number(categoryId))
-            this.user.candidates.push(Number(candidateId))
-          })
+          axios.post('/vote', { candidate_id: candidateId })
+            .then(response => {
+              this.user.categories.push(Number(categoryId))
+              this.user.candidates.push(Number(candidateId))
+            })
+            .catch(error => {
+              if (!error.response) {
+                return
+              }
+
+              if ('error' in error.response.data) {
+                this.$dialog.alert({
+                  title: 'Error',
+                  message: error.response.data.error.message,
+                  type: 'is-danger'
+                })
+
+                return
+              }
+            })
         }
       })
     },
@@ -69,7 +86,9 @@ export default {
 
       FB.login(response => {
         if (response.status !== 'connected') {
-          this.$dialog.alert('Cannot login with Facebook. Please try again.', {
+          this.$dialog.alert({
+            title: 'Error',
+            message: 'Cannot login with Facebook. Please try again.',
             type: 'is-danger'
           })
 
@@ -89,7 +108,9 @@ export default {
         this.ui.button.fbLoginDisabled = false
 
         if ('error' in response.data) {
-          this.$dialog.alert(response.data.error.message, {
+          this.$dialog.alert({
+            title: 'Error',
+            message: response.data.error.message,
             type: 'is-danger'
           })
 
@@ -102,6 +123,7 @@ export default {
 
     logout: function (el) {
       this.$dialog.confirm({
+        title: 'Logout',
         message: 'Are you sure you want to logout?',
         onConfirm: () => {
           axios.get('/auth/logout').then(response => {

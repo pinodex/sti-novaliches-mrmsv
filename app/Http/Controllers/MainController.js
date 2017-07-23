@@ -31,6 +31,27 @@ class MainController {
       return
     }
 
+    yield user.related(['votes', 'votes.candidate']).load()
+    let categoryAlreadyVoted = false
+
+    user.relations.votes.values().each(vote => {
+      if (vote.relations.candidate.category_id == candidate.category_id) {
+        categoryAlreadyVoted = true
+
+        return false
+      }
+    })
+
+    if (categoryAlreadyVoted) {
+      response.status(403).send({
+        error: {
+          message: 'Category already voted'
+        }
+      })
+
+      return
+    }
+
     let vote = new Vote()
 
     vote.user_id = user.id
