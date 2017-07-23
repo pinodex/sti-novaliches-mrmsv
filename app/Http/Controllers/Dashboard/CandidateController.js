@@ -17,7 +17,7 @@ const Jimp = require('jimp'),
 
 class CandidateController {
   * index (request, response) {
-    const candidates = yield Candidate.query().with('category').fetch()
+    const candidates = yield Candidate.query().with('category', 'votes').fetch()
 
     yield response.sendView('dashboard/candidate/index', {
       result: candidates
