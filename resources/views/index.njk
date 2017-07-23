@@ -39,20 +39,24 @@
             </div>
 
             <div v-else>
-              <div class="media user">
+              <article class="media user">
                 <div class="media-content">
-                  <h2 class="subtitle has-text-right">Logged in as</h2>
-                  <h1 class="title has-text-right">{{ '{{ user.name }}' }}</h1>
+                  <div class="content">
+                    <h1 class="title has-text-right">
+                      <small>Logged in as</small>
+                      {{ '{{ user.name }}' }}
+                    </h1>
 
-                  <h2 class="subtitle has-text-right">
-                    <a href="{{ route('auth.logout') }}" @click.prevent="logout">
-                      <span class="icon is-small">
-                        <i class="fa fa-sign-out"></i>
-                      </span>
+                    <p class="has-text-right">
+                      <a href="#logout" @click.prevent="logout">
+                        <span class="icon is-small">
+                          <i class="fa fa-sign-out"></i>
+                        </span>
 
-                      <small>Logout</small>
-                    </a>
-                  </h2>
+                        <small>Logout</small>
+                      </a>
+                    </p>
+                  </div>
                 </div>
 
                 <div class="media-right">
@@ -60,7 +64,7 @@
                     <img :src="user.avatar" />
                   </figure>
                 </div>
-              </div>
+              </article>
             </div>
           </div>
         </div>
@@ -69,57 +73,65 @@
   </section>
 
   <div class="container has-contents-below">
-    {% raw %}
-      <div class="columns" v-for="(category, categoryId) in entries">
+    {% for category in categories.toJSON() %}
+      <div class="columns">
         <div class="column">
           <h1 class="title">{{ category.name }}</h1>
 
-          <div class="columns">
-            <div class="column" v-for="(candidate, candidateId) in category.candidates">
-              <div class="card">
-                <div class="card-image">
-                  <figure class="image is-1by1">
-                    <img :src="'/storage/' + candidate.picture_path" alt="Image" />
-                    <span class="tag vote-count" :class="{
-                      'is-light': candidate.votes == 0,
-                      'is-info': candidate.votes > 0 }">
-                        <span>{{ candidate.votes }}&nbsp;</span>
-                        <span v-if="candidate.votes == 1">vote</span>
-                        <span v-else>votes</span>
-                      </span>
-                  </figure>
-                </div>
-                <div class="card-content">
-                  <div class="media">
-                    <div class="media-content">
-                      <p class="title is-4">{{ candidate.name }}</p>
 
-                      <div v-if="user">
-                        <button class="button is-small is-fullwidth vote-button"
-                          :class="{ 'is-success': isVoted(candidate.id) }"
-                          :disabled="isCategoryTaken(category.id) && !isVoted(candidate.id)"
-                          @click="vote(category.id, candidate.id)">
+          <div class="columns is-multiline">
+            <div class="column is-one-quarter"
+              v-for="candidate in candidates"
+              v-if="candidate.category_id == {{ category.id }}">
 
-                          <span class="icon is-small">
-                            <i class="fa" :class="{
-                              'fa-thumbs-o-up': !candidate.selected,
-                              'fa-check': candidate.selected
-                            }"></i>
-                          </span>
+              {% raw %}
+                <div class="card">
+                  <div class="card-image">
+                    <figure class="image is-1by1">
+                      <img :src="'/storage/' + candidate.picture_path" alt="Image" />
+                      <span class="tag vote-count" :class="{
+                        'is-light': candidate.votes == 0,
+                        'is-info': candidate.votes > 0 }">
+                          <span>{{ candidate.votes }}&nbsp;</span>
+                          <span v-if="candidate.votes == 1">vote</span>
+                          <span v-else>votes</span>
+                        </span>
+                    </figure>
+                  </div>
+                  <div class="card-content">
+                    <div class="media">
+                      <div class="media-content">
+                        <p class="title is-4">{{ candidate.name }}</p>
 
-                          <span v-if="isVoted(candidate.id)">Voted</span>
-                          <span v-else>Vote</span>
-                        </button>
+                        <div v-if="user">
+                          <button class="button is-small is-fullwidth vote-button"
+                            :class="{
+                              'is-success': isVoted(candidate.id),
+                              'is-static': isCategoryTaken(candidate.category_id) && !isVoted(candidate.id)
+                            }"
+                            @click="vote(candidate.id)">
+
+                            <span class="icon is-small">
+                              <i class="fa" :class="{
+                                'fa-thumbs-o-up': !candidate.selected,
+                                'fa-check': candidate.selected
+                              }"></i>
+                            </span>
+
+                            <span v-if="isVoted(candidate.id)">Voted</span>
+                            <span v-else>Vote</span>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              {% endraw %}
             </div>
           </div>
         </div>
       </div>
-    {% endraw %}
+    {% endfor %}
   </div>
 
   <footer class="footer">
@@ -159,5 +171,7 @@
 {% block scripts %}
   <script type="text/javascript">
     var user = {{ user | json | safe }}
-  </script>
+
+    var candidates = {{ candidates | json | safe }}
+</script>
 {% endblock %}

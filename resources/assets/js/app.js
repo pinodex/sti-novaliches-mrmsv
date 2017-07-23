@@ -12,6 +12,9 @@ import io from 'adonis-websocket-client'
 
 import methods from './methods.js'
 
+require('./array-find-polyfill')
+require('./array-findindex-polyfill')
+
 const csrfMetaElement = document.querySelector('meta[name="csrf-token"]')
 
 if (csrfMetaElement) {
@@ -42,6 +45,10 @@ let app = new Vue({
       this.ui.modal.showLoginPrompt = false
       this.user = user
     }
+
+    if ('candidates' in window && window.candidates) {
+      this.candidates = candidates
+    }
   },
 
   data: function () {
@@ -62,7 +69,7 @@ let app = new Vue({
 
       user: null,
 
-      entries: [],
+      candidates: [],
 
       form: {
         disabled: false,
@@ -86,19 +93,16 @@ app.$client.connect((error, connected) => {
 
     return
   }
+})
 
-  if (connected) {
-    app.$client.emit('update')
+app.$client.on('candidates', data => {
+  app.candidates = data
+})
+
+app.$client.on('candidate.voted', id => {
+  let index = app.candidates.findIndex(candidate => candidate.id == id)
+
+  if (index > -1) {
+    app.candidates[index].votes++
   }
-})
-
-app.$client.on('data', data => {
-  app.entries = data
-})
-
-app.$client.on('candidate.inc', data => {
-  let catId = data.category_id,
-      canId = data.candidate_id
-
-  app.entries[catId].candidates[canId].votes++
 })

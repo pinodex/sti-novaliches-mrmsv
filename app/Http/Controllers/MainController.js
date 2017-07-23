@@ -1,20 +1,29 @@
 'use strict'
 
 const Event = use('Event'),
-      Candidate = use('App/Model/Candidate'),
       Vote = use('App/Model/Vote'),
       User = use('App/Model/User'),
+      Category = use('App/Model/Category'),
+      Candidate = use('App/Model/Candidate'),
+      VoteResult = use('App/Components/VoteResult'),
       UserTransformer = use('App/Components/UserTransformer')
 
 class MainController {
   * index (request, response) {
-    const user = yield request.auth.authenticator('user').getUser()
+    const user = yield request.auth.authenticator('user').getUser(),
+          candidates = yield VoteResult.get(),
+          categories = yield Category.query()
+            .orderBy('name', 'ASC')
+            .fetch()
 
     if (user) {
       yield user.related('votes').load()
     }
 
-    yield response.sendView('index', { user: yield UserTransformer.transform(user) })
+    yield response.sendView('index', {
+      user: yield UserTransformer.transform(user),
+      candidates, categories
+    })
   }
 
   * vote (request, response) {
@@ -59,7 +68,7 @@ class MainController {
 
     yield vote.save()
 
-    Event.fire('candidate.inc', candidate)
+    Event.fire('candidate.voted', candidate)
 
     response.status(204).send()
   }

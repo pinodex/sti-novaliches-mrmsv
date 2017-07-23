@@ -1,48 +1,35 @@
 'use strict'
 
-const Category = use('App/Model/Category'),
-      User = use('App/Model/User')
+const Candidate = use('App/Model/Candidate'),
+      shuffle = require('knuth-shuffle').knuthShuffle
 
 class VoteResult {
 
   static * get () {
-    const categories = yield Category.query()
-      .with('candidates', 'candidates.votes')
+    const candidates = yield Candidate.query()
+      .with('votes')
       .fetch()
 
-    let result = {}
+    let result = []
 
-    categories.values().each(category => {
-      let entry = {
-        id: category.id,
-        name: category.name,
-        candidates: {}
+    candidates.each(candidate => {
+      let totalVotes = 0
+
+      if (!(candidate.relations.votes instanceof Array)) {
+        totalVotes = candidate.relations.votes.size()
       }
 
-      if (category.relations.candidates instanceof Array) {
-        result[category.id] = entry
-
-        return true
-      }
-
-      category.relations.candidates.values().each(candidate => {
-        let totalVotes = 0
-
-        if (!(candidate.relations.votes instanceof Array)) {
-          totalVotes = candidate.relations.votes.size()
-        }
-
-        entry.candidates[candidate.id] = {
-          id: candidate.id,
-          name: candidate.name,
-          thumb_path: candidate.thumb_path,
-          picture_path: candidate.picture_path,
-          votes: totalVotes
-        }
+      result.push({
+        id: candidate.id,
+        category_id: candidate.category_id,
+        name: candidate.name,
+        thumb_path: candidate.thumb_path,
+        picture_path: candidate.picture_path,
+        votes: totalVotes
       })
-
-      result[category.id] = entry
     })
+
+    shuffle(result)
 
     return result
   }

@@ -9,20 +9,17 @@ class ResultController {
   constructor (socket, request, presence) {
     this.socket = socket
 
-    if (!Event.hasListeners('candidate.inc')) {
-      Event.when('candidate.inc', candidate => {
-        this.socket.toEveryone().emit('candidate.inc', {
-          candidate_id: candidate.id,
-          category_id: candidate.category_id
-        })
+    if (!Event.hasListeners('candidate.voted')) {
+      Event.when('candidate.voted', candidate => {
+        this.socket.toEveryone().emit('candidate.voted', candidate.id)
       })
     }
   }
 
-  * onUpdate () {
+  * onGetResult () {
     const result = yield VoteResult.get()
 
-    this.socket.toMe().emit('data', result)
+    this.socket.toMe().emit('candidates', result)
   }
 
 }
