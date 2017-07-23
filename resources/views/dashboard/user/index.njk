@@ -1,0 +1,129 @@
+{% extends '../../layouts/dashboard' %}
+
+{% set page_title = 'Users' %}
+{% set active_menu = 'users' %}
+
+{% block subcontent %}
+  <section class="hero is-light has-contents-below">
+    <div class="hero-body">
+      <div class="container is-fluid">
+        <div class="level">
+          <div class="level-left">
+            <h1 class="title">Users</h1>
+          </div>
+
+          <div class="level-right"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container is-fluid">
+    <div class="level">
+      <div class="level-left"></div>
+      <div class="level-right">
+        <form action="{{ route('dashboard.users') }}">
+          <div class="field has-addons">
+            <div class="control has-icons-left">
+              <input class="input" type="text" name="name" value="{{ nameSearch }}" placeholder="Search user" />
+              <span class="icon is-small is-left">
+                <i class="fa fa-user"></i>
+              </span>
+            </div>
+
+            <div class="control">
+              <button type="button" class="button is-info">
+                <span class="icon is-small">
+                  <i class="fa fa-search"></i>
+                </span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Signed on</th>
+          <th class="is-fit">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for user in result.data %}
+          <tr>
+            <td>
+              <div class="media">
+                <div class="media-left">
+                  <figure class="image is-48x48">
+                    <img src="{{ user.avatar }}" alt="User Photo" />
+                  </figure>
+                </div>
+
+                <div class="media-content">
+                  <h1 class="title is-6 is-thick">{{ user.name }}</h1>
+                  </div>
+              </div>
+            </td>
+            <td>
+              {% if user.created_at %}
+                {{ user.created_at }}
+              {% else %}
+                None recorded
+              {% endif %}
+            </td>
+            <td>
+              <div class="field is-grouped">
+                <p class="control">
+                  <a href="https://www.facebook.com/{{ user.fbid }}" class="button is-primary is-small is-inverted" target="_blank">
+                    <span class="icon is-small">
+                      <i class="fa fa-user"></i>
+                    </span>
+
+                    <span>View Profile</span>
+                  </a>
+                </p>
+
+                <p class="control">
+                  <a href="{{ route('dashboard.users.view', { id: user.id }) }}" class="button is-small is-inverted">
+                    <span class="icon is-small">
+                      <i class="fa fa-eye"></i>
+                    </span>
+                  </a>
+                </p>
+              </div>
+            </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="3">No results found</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% if result.lastPage > 1 %}
+      <div class="field">
+        <p class="control has-icons-left">
+          <span class="select">
+            <select name="page" id="page-selector">
+              {% for i in range(1, result.lastPage) %}
+                {% if i == result.currentPage %}
+                  <option value="{{ i }}" selected>Page {{ i }}</option>
+                {% else %}
+                  <option value="{{ i }}">Page {{ i }}</option>
+                {% endif %}
+              {% endfor %}
+            </select>
+          </span>
+          <span class="icon is-small is-left">
+            <i class="fa fa-file"></i>
+          </span>
+        </p>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

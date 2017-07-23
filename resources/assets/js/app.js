@@ -9,6 +9,7 @@ import Buefy from 'buefy'
 import axios from 'axios'
 
 import io from 'adonis-websocket-client'
+import qs from 'qs'
 
 import methods from './methods.js'
 
@@ -106,3 +107,18 @@ app.$client.on('candidate.voted', id => {
     app.candidates[index].votes++
   }
 })
+
+let pageSelector = document.getElementById('page-selector')
+
+if (pageSelector) {
+  let query = location.search.substr(1),
+      params = qs.parse(query)
+
+  pageSelector.addEventListener('change', e => {
+    params.page = e.target.value
+
+    query = qs.stringify(params)
+
+    window.location = `${location.pathname}?${query}`
+  }, false)
+}

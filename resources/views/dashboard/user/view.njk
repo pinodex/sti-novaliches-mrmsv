@@ -1,0 +1,105 @@
+{% extends '../../layouts/dashboard' %}
+
+{% set page_title = 'Users' %}
+{% set active_menu = 'users' %}
+
+{% block subcontent %}
+  <section class="hero is-light has-contents-below">
+    <div class="hero-body">
+      <div class="container is-fluid">
+        <div class="level">
+          <div class="level-left">
+            <h1 class="title">View User</h1>
+          </div>
+
+          <div class="level-right"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container is-fluid">
+    <div class="columns">
+      <div class="column is-6 is-offset-3">
+        <div class="box">
+          <article class="media user">
+            <figure class="media-left">
+              <p class="image is-64x64">
+                <img src="{{ model.avatar }}" class="User Picture" />
+              </p>
+            </figure>
+
+            <div class="media-content">
+              <div class="content">
+                <h1 class="title">{{ model.name }}</h1>
+                <p>
+                  <a href="https://www.facebook.com/{{ model.fbid }}" target="_blank">
+                    <span>View Profile</span>
+                  </a>
+                </p>
+              </div>
+            </div>
+
+            <div class="media-right">
+              {% if model.created_at %}
+                <p class="Registered at">
+                  <span class="icon is-small">
+                    <i class="fa fa-clock-o"></i>
+                  </span>
+
+                  <span>{{ model.created_at }}</span>
+                </p>
+              {% endif %}
+
+              {% if model.updated_at %}
+                <p class="Updated at">
+                  <span class="icon is-small">
+                    <i class="fa fa-pencil"></i>
+                  </span>
+
+                  <span>{{ model.updated_at }}</span>
+                </p>
+              {% endif %}
+            </div>
+          </article>
+
+          <hr />
+
+          <h2 class="subtitle">Votes</h2>
+
+          {% for vote in model.votes %}
+            {% if vote.candidate %}
+              <article class="media">
+                <figure class="media-left">
+                  <p class="image is-48x48">
+                    <img src="/storage/{{ vote.candidate.thumb_path }}" class="Candidate Picture" />
+                  </p>
+                </figure>
+                <div class="media-content">
+                  <h1 class="title is-5">{{ vote.candidate.name }}</h1>
+
+                  {% if vote.candidate.category %}
+                    <h2 class="subtitle is-6">{{ vote.candidate.category.name }}</h2>
+                  {% endif %}
+                </div>
+                <div class="media-right">
+                  <p>
+                    <span class="icon is-small">
+                      <i class="fa fa-clock-o"></i>
+                    </span>
+
+                    <span>{{ vote.created_at }}</span>
+                  </p>
+                </div>
+              </article>
+            {% endif %}
+          {% else %}
+            <div class="notification is-info">
+              This user has not voted yet.
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

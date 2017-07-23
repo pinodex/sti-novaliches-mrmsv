@@ -4,6 +4,10 @@ const Env = use('Env')
 
 module.exports = {
 
+  base_url: Env.get('BASE_URL'),
+
+  google_analytics_code: Env.get('GOOGLE_ANALYTICS_CODE'),
+
   /*
   |--------------------------------------------------------------------------
   | App Key

@@ -12,7 +12,7 @@ module.exports = [
       },
 
       {
-        icon: 'users',
+        icon: 'vcard',
         identifier: 'accounts',
         route: 'dashboard.accounts',
         name: 'Accounts'
@@ -30,6 +30,13 @@ module.exports = [
         identifier: 'candidates',
         route: 'dashboard.candidates',
         name: 'Candidates'
+      },
+
+      {
+        icon: 'users',
+        identifier: 'users',
+        route: 'dashboard.users',
+        name: 'Users'
       }
     ]
   }

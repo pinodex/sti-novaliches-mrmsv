@@ -131,3 +131,20 @@ Route.group('dashboard.candidates', () => {
 })
 .prefix('dashboard/candidates')
 .middleware('auth:account')
+
+/**
+ * Users
+ */
+Route.group('dashboard.users', () => {
+
+  Route
+    .get('/', 'Dashboard/UserController.index')
+    .as('dashboard.users')
+
+  Route
+    .get('/:id', 'Dashboard/UserController.view')
+    .as('dashboard.users.view')
+
+})
+.prefix('dashboard/users')
+.middleware('auth:account')
