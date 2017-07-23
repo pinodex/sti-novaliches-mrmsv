@@ -22,8 +22,10 @@ class MainController {
     }
 
     yield response.sendView('index', {
+      extended_meta_tags: true,
       user: yield UserTransformer.transform(user),
-      candidates, categories: shuffle(categories.value())
+      categories: shuffle(categories.value()),
+      candidates, request
     })
   }
 
