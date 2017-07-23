@@ -9,7 +9,7 @@
       <div class="container">
         <div class="level">
           <div class="level-left">
-            <div class="media">
+            <div class="media site-header">
               <div class="media-left">
                 <figure class="image">
                   <img src="/assets/img/logo-100.png" alt="Logo" />
@@ -40,14 +40,20 @@
 
             <div v-else>
               <article class="media user">
+                <div class="media-left is-hidden-desktop">
+                  <figure class="image is-64x64">
+                    <img :src="user.avatar" />
+                  </figure>
+                </div>
+
                 <div class="media-content">
                   <div class="content">
-                    <h1 class="title has-text-right">
+                    <h1 class="title">
                       <small>Logged in as</small>
                       {{ '{{ user.name }}' }}
                     </h1>
 
-                    <p class="has-text-right">
+                    <p class="logout">
                       <a href="#logout" @click.prevent="logout">
                         <span class="icon is-small">
                           <i class="fa fa-sign-out"></i>
@@ -59,7 +65,7 @@
                   </div>
                 </div>
 
-                <div class="media-right">
+                <div class="media-right is-hidden-touch">
                   <figure class="image is-64x64">
                     <img :src="user.avatar" />
                   </figure>
@@ -73,7 +79,7 @@
   </section>
 
   <div class="container has-contents-below">
-    {% for category in categories.toJSON() %}
+    {% for category in categories %}
       <div class="columns">
         <div class="column">
           <h1 class="title">{{ category.name }}</h1>
@@ -85,13 +91,14 @@
               v-if="candidate.category_id == {{ category.id }}">
 
               {% raw %}
-                <div class="card">
+                <div class="card candidate" :class="{ 'is-selected': isVoted(candidate.id) }">
                   <div class="card-image">
                     <figure class="image is-1by1">
                       <img :src="'/storage/' + candidate.picture_path" alt="Image" />
                       <span class="tag vote-count" :class="{
                         'is-light': candidate.votes == 0,
-                        'is-info': candidate.votes > 0 }">
+                        'is-info': candidate.votes > 0,
+                        'is-success': isVoted(candidate.id) }">
                           <span>{{ candidate.votes }}&nbsp;</span>
                           <span v-if="candidate.votes == 1">vote</span>
                           <span v-else>votes</span>
@@ -113,8 +120,8 @@
 
                             <span class="icon is-small">
                               <i class="fa" :class="{
-                                'fa-thumbs-o-up': !candidate.selected,
-                                'fa-check': candidate.selected
+                                'fa-thumbs-o-up': !isVoted(candidate.id),
+                                'fa-check': isVoted(candidate.id)
                               }"></i>
                             </span>
 
@@ -137,9 +144,7 @@
   <footer class="footer">
     <div class="container">
       <div class="content has-text-centered">
-        <p>
-
-        </p>
+        <p>STI College Novaliches</p>
       </div>
     </div>
   </footer>

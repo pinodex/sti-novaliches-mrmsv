@@ -6,7 +6,8 @@ const Event = use('Event'),
       Category = use('App/Model/Category'),
       Candidate = use('App/Model/Candidate'),
       VoteResult = use('App/Components/VoteResult'),
-      UserTransformer = use('App/Components/UserTransformer')
+      UserTransformer = use('App/Components/UserTransformer'),
+      shuffle = require('knuth-shuffle').knuthShuffle
 
 class MainController {
   * index (request, response) {
@@ -22,7 +23,7 @@ class MainController {
 
     yield response.sendView('index', {
       user: yield UserTransformer.transform(user),
-      candidates, categories
+      candidates, categories: shuffle(categories.value())
     })
   }
 

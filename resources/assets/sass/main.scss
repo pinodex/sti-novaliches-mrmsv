@@ -45,6 +45,18 @@ body {
 .media {
     align-items: center;
 
+    &.site-header {
+        @media (max-width: 769px) {
+            .title {
+                font-size: 1.5rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+    }
+
     &.user {
         .title {
             font-size: 1.4rem;
@@ -66,6 +78,12 @@ body {
             font-weight: 400;
         }
 
+        @media (min-width: 1000px) {
+            .logout {
+                text-align: right;
+            }
+        }
+
         p {
             margin: 0;
             color: #fff;
@@ -73,6 +91,24 @@ body {
 
         .button.is-small {
             height: 1.2rem;
+        }
+    }
+}
+
+.card {
+    &.candidate {
+        .card-image {
+            pointer-events: none;
+        }
+
+        .card-content {
+            .title {
+                height: 60px;
+            }
+        }
+
+        &.is-selected {
+            outline: 1px solid #23d160;
         }
     }
 }
