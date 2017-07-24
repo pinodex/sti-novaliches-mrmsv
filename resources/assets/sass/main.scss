@@ -94,6 +94,14 @@ body {
             font-weight: 400;
         }
 
+        .logout {
+          color: #fff;
+
+          &:hover {
+            color: #00d1b2;
+          }
+        }
+
         @media (min-width: 1000px) {
             .logout {
                 text-align: right;

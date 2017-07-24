@@ -25,12 +25,12 @@
 
           <div class="level-right">
             <div v-if="user == null">
-              <button class="button is-info"
+              <button class="button is-info is-medium"
                 @click="fbLogin"
                 :disabled="ui.button.fbLoginDisabled"
                 :class="{'is-loading': ui.button.fbLoginDisabled}">
 
-                <span class="icon is-small">
+                <span class="icon">
                   <i class="fa fa-facebook"></i>
                 </span>
 
