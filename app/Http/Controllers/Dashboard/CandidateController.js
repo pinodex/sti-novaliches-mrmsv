@@ -75,18 +75,20 @@ class CandidateController {
         allowedExtensions: ['jpg', 'png', 'jpeg']
       })
 
-      const baseName = `${slug(model.name)}-${Math.round(Math.random() * Number.MAX_SAFE_INTEGER)}`,
-            pictureName = `${baseName}-picture.jpg`,
-            thumbName = `${baseName}-thumb.jpg`
+      if (picture.clientSize() > 0) {
+        const baseName = `${slug(model.name)}-${Math.round(Math.random() * Number.MAX_SAFE_INTEGER)}`,
+              pictureName = `${baseName}-picture.jpg`,
+              thumbName = `${baseName}-thumb.jpg`
 
-      Jimp.read(picture.tmpPath())
-        .then(image => {
-          image.resize(512, 512).quality(90).write(`${Helpers.storagePath()}/public/${pictureName}`)
-          image.resize(128, 128).quality(75).write(`${Helpers.storagePath()}/public/${thumbName}`)
-        })
+        Jimp.read(picture.tmpPath())
+          .then(image => {
+            image.resize(512, 512).quality(90).write(`${Helpers.storagePath()}/public/${pictureName}`)
+            image.resize(128, 128).quality(75).write(`${Helpers.storagePath()}/public/${thumbName}`)
+          })
 
-      model.picture_path = pictureName
-      model.thumb_path = thumbName
+        model.picture_path = pictureName
+        model.thumb_path = thumbName
+      }
 
       yield model.save()
       yield request.with({ success: `Changes to ${model.name} has been saved` }).flash()
