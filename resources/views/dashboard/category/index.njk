@@ -13,13 +13,27 @@
           </div>
 
           <div class="level-right">
-            <a href="{{ route('dashboard.categories.add') }}" class="button is-primary">
-              <span class="icon is-small">
-                <i class="fa fa-plus"></i>
-              </span>
+            <div class="field is-grouped">
+              <p class="control">
+                <a href="{{ route('dashboard.categories.add') }}" class="button is-primary">
+                  <span class="icon is-small">
+                    <i class="fa fa-plus"></i>
+                  </span>
 
-              <span>Add Category</span>
-            </a>
+                  <span>Add Category</span>
+                </a>
+              </p>
+
+              <p class="control">
+                <button class="button" title="Emit category update"
+                  @click="quickPost('{{ route('dashboard.categories.emit_update') }}')"
+                  :class="{ 'is-loading': ui.button.quickPostLoading }">
+                  <span class="icon is-small">
+                    <i class="fa fa-refresh"></i>
+                  </span>
+                </button>
+              </p>
+            </div>
           </div>
         </div>
       </div>

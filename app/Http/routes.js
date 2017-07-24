@@ -92,6 +92,10 @@ Route.group('dashboard.categories', () => {
     .as('dashboard.categories')
 
   Route
+    .post('/emit-update', 'Dashboard/CategoryController.emitUpdate')
+    .as('dashboard.categories.emit_update')
+
+  Route
     .route('add', ['GET', 'POST'], 'Dashboard/CategoryController.edit')
     .as('dashboard.categories.add')
 
@@ -115,6 +119,10 @@ Route.group('dashboard.candidates', () => {
   Route
     .get('/', 'Dashboard/CandidateController.index')
     .as('dashboard.candidates')
+
+  Route
+    .post('/emit-update', 'Dashboard/CandidateController.emitUpdate')
+    .as('dashboard.candidates.emit_update')
 
   Route
     .route('add', ['GET', 'POST'], 'Dashboard/CandidateController.edit')

@@ -7,8 +7,10 @@
  * Copyright 2017, Raphael Marco <raphaelmarco@outlook.com>
  */
 
-const Category = use('App/Model/Category')
-const Validator = use('Validator')
+const Category = use('App/Model/Category'),
+      VoteResult = use('App/Components/VoteResult'),
+      Validator = use('Validator'),
+      Event = use('Event')
 
 class CategoryController {
   * index (request, response) {
@@ -17,6 +19,14 @@ class CategoryController {
     yield response.sendView('dashboard/category/index', {
       result: categories
     })
+  }
+
+  * emitUpdate (request, response) {
+    const categories = yield VoteResult.getCategories()
+
+    Event.fire('categories.update', categories)
+
+    response.status(204).send()
   }
 
   * edit (request, response) {

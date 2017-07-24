@@ -14,6 +14,18 @@ class ResultController {
         this.socket.toEveryone().emit('candidate.voted', candidate.id)
       })
     }
+
+    if (!Event.hasListeners('candidates.update')) {
+      Event.when('candidates.update', data => {
+        this.socket.toEveryone().emit('candidates.update', data)
+      })
+    }
+
+    if (!Event.hasListeners('categories.update')) {
+      Event.when('categories.update', data => {
+        this.socket.toEveryone().emit('categories.update', data)
+      })
+    }
   }
 
   * onGetResult () {

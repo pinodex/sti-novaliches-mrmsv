@@ -7,10 +7,12 @@
  * Copyright 2017, Raphael Marco <raphaelmarco@outlook.com>
  */
 
-const Candidate = use('App/Model/Candidate')
-const Category = use('App/Model/Category')
-const Validator = use('Validator')
-const Helpers = use('Helpers')
+const VoteResult = use('App/Components/VoteResult'),
+      Candidate = use('App/Model/Candidate'),
+      Category = use('App/Model/Category'),
+      Validator = use('Validator'),
+      Helpers = use('Helpers'),
+      Event = use('Event')
 
 const Jimp = require('jimp'),
       slug = require('limax')
@@ -22,6 +24,14 @@ class CandidateController {
     yield response.sendView('dashboard/candidate/index', {
       result: candidates
     })
+  }
+
+  * emitUpdate (request, response) {
+    const candidates = yield VoteResult.get()
+
+    Event.fire('candidates.update', candidates)
+
+    response.status(204).send()
   }
 
   * edit (request, response) {

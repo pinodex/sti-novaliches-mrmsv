@@ -68,7 +68,8 @@ let app = new Vue({
         },
 
         button: {
-          fbLoginDisabled: false
+          fbLoginDisabled: false,
+          quickPostLoading: false
         }
       },
 
@@ -111,6 +112,14 @@ app.$client.on('candidate.voted', id => {
   if (index > -1) {
     app.candidates[index].votes++
   }
+})
+
+app.$client.on('categories.update', data => {
+  app.categories = data
+})
+
+app.$client.on('candidates.update', data => {
+  app.candidates = data
 })
 
 let pageSelector = document.getElementById('page-selector')

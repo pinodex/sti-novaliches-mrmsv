@@ -34,6 +34,14 @@ export default {
     return this.candidates.find(candidate => candidate.id == id)
   },
 
+  quickPost: function (url, data = {}) {
+    this.ui.button.quickPostLoading = true
+
+    axios.post(url, data)
+      .then(() => this.ui.button.quickPostLoading = false)
+      .catch(() => this.ui.button.quickPostLoading = false)
+  },
+
   vote: function (candidateId) {
     let candidate = this.findCandidate(candidateId)
 

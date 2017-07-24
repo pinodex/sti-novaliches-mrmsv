@@ -61,7 +61,11 @@
                 <div class="field">
                   <label class="label">Picture</label>
                   <div class="control">
-                    <input class="input" type="file" name="picture" required @change="previewImage" />
+                    {% if model.picture_path %}
+                      <input class="input" type="file" name="picture" @change="previewImage" />
+                    {% else %}
+                      <input class="input" type="file" name="picture" required @change="previewImage" />
+                    {% endif %}
                   </div>
                 </div>
 
