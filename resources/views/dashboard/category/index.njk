@@ -31,6 +31,7 @@
       <thead>
         <tr>
           <th>Name</th>
+          <th>Active</th>
           <th class="is-fit">Actions</th>
         </tr>
       </thead>
@@ -39,6 +40,13 @@
         {% for category in result.toJSON() %}
           <tr>
             <td>{{ category.name }}</td>
+            <td>
+              {% if category.is_active %}
+                Yes
+              {% else %}
+                No
+              {% endif %}
+            </td>
             <td>
               <div class="field is-grouped">
                 <p class="control">

@@ -2,20 +2,15 @@
 
 const Event = use('Event'),
       Vote = use('App/Model/Vote'),
-      User = use('App/Model/User'),
-      Category = use('App/Model/Category'),
       Candidate = use('App/Model/Candidate'),
       VoteResult = use('App/Components/VoteResult'),
-      UserTransformer = use('App/Components/UserTransformer'),
-      shuffle = require('knuth-shuffle').knuthShuffle
+      UserTransformer = use('App/Components/UserTransformer')
 
 class MainController {
   * index (request, response) {
     const user = yield request.auth.authenticator('user').getUser(),
           candidates = yield VoteResult.get(),
-          categories = yield Category.query()
-            .orderBy('name', 'ASC')
-            .fetch()
+          categories = yield VoteResult.getCategories()
 
     if (user) {
       yield user.related('votes').load()
@@ -24,8 +19,7 @@ class MainController {
     yield response.sendView('index', {
       extended_meta_tags: true,
       user: yield UserTransformer.transform(user),
-      categories: shuffle(categories.value()),
-      candidates, request
+      categories, candidates, request
     })
   }
 
@@ -43,7 +37,20 @@ class MainController {
       return
     }
 
-    yield user.related(['votes', 'votes.candidate']).load()
+    yield candidate.related('category').load()
+
+    if (!candidate.relations.category || !candidate.relations.category.is_active) {
+      response.status(400).send({
+        error: {
+          message: 'Candidate category is closed'
+        }
+      })
+
+      return
+    }
+
+    yield user.related('votes', 'votes.candidate').load()
+
     let categoryAlreadyVoted = false
 
     user.relations.votes.values().each(vote => {

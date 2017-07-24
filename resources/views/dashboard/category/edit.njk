@@ -54,6 +54,23 @@
             </div>
 
             <div class="field">
+              <label class="label">Active</label>
+              <div class="control">
+                <div class="select">
+                  <select name="is_active">
+                    {% if model.is_active %}
+                      <option value="1" selected>Yes</option>
+                      <option value="0">No</option>
+                    {% else %}
+                      <option value="1">Yes</option>
+                      <option value="0" selected>No</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="field">
               <p class="control is-clearfix">
                 <button class="button is-primary is-pulled-right">
                   <span class="icon is-small">

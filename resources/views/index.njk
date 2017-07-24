@@ -79,66 +79,78 @@
   </section>
 
   <div class="container has-contents-below">
-    {% for category in categories %}
-      <div class="columns">
+    {% raw %}
+      <div class="columns" v-for="category in categories">
         <div class="column">
-          <h1 class="title">{{ category.name }}</h1>
+          <div class="level">
+            <div class="level-left">
+              <h1 class="title">{{ category.name }}</h1>
+            </div>
+            <div class="level-right">
+              <span class="tag is-warning is-large" v-if="!category.is_active">
+                <span class="icon">
+                  <i class="fa fa-exclamation-circle"></i>
+                </span>
 
+                <span>Voting Closed</span>
+              </span>
+            </div>
+          </div>
 
           <div class="columns is-multiline">
             <div class="column is-one-quarter"
               v-for="candidate in candidates"
-              v-if="candidate.category_id == {{ category.id }}">
+              v-if="candidate.category_id == category.id">
 
-              {% raw %}
-                <div class="card candidate" :class="{ 'is-selected': isVoted(candidate.id) }">
-                  <div class="card-image">
-                    <figure class="image is-1by1">
-                      <img :src="'/storage/' + candidate.picture_path" alt="Image" />
-                      <span class="tag vote-count" :class="{
-                        'is-light': candidate.votes == 0,
-                        'is-info': candidate.votes > 0,
-                        'is-success': isVoted(candidate.id) }">
-                          <span>{{ candidate.votes }}&nbsp;</span>
-                          <span v-if="candidate.votes == 1">vote</span>
-                          <span v-else>votes</span>
-                        </span>
-                    </figure>
-                  </div>
-                  <div class="card-content">
-                    <div class="media">
-                      <div class="media-content">
-                        <p class="title is-4">{{ candidate.name }}</p>
+              <div class="card candidate" :class="{ 'is-selected': isVoted(candidate.id) }">
+                <div class="card-image">
+                  <figure class="image is-1by1">
+                    <img :src="'/storage/' + candidate.picture_path" alt="Image" />
+                    <span class="tag vote-count" :class="{
+                      'is-light': candidate.votes == 0,
+                      'is-info': candidate.votes > 0,
+                      'is-success': isVoted(candidate.id) }">
 
-                        <div v-if="user">
-                          <button class="button is-small is-fullwidth vote-button"
-                            :class="{
-                              'is-success': isVoted(candidate.id),
-                              'is-static': isCategoryTaken(candidate.category_id) && !isVoted(candidate.id)
-                            }"
-                            @click="vote(candidate.id)">
+                        <span>{{ candidate.votes }}&nbsp;</span>
+                        <span v-if="candidate.votes == 1">vote</span>
+                        <span v-else>votes</span>
+                      </span>
+                  </figure>
+                </div>
 
-                            <span class="icon is-small">
-                              <i class="fa" :class="{
-                                'fa-thumbs-o-up': !isVoted(candidate.id),
-                                'fa-check': isVoted(candidate.id)
-                              }"></i>
-                            </span>
+                <div class="card-content">
+                  <div class="media">
+                    <div class="media-content">
+                      <p class="title is-4">{{ candidate.name }}</p>
 
-                            <span v-if="isVoted(candidate.id)">Voted</span>
-                            <span v-else>Vote</span>
-                          </button>
-                        </div>
+                      <div v-if="user && category.is_active">
+                        <button class="button is-small is-fullwidth vote-button"
+                          @click="vote(candidate.id)"
+                          :class="{
+                            'is-success': isVoted(candidate.id),
+                            'is-static': isCategoryTaken(candidate.category_id) && !isVoted(candidate.id)
+                          }">
+
+                          <span class="icon is-small">
+                            <i class="fa" :class="{
+                              'fa-thumbs-o-up': !isVoted(candidate.id),
+                              'fa-check': isVoted(candidate.id)
+                            }"></i>
+                          </span>
+
+                          <span v-if="isVoted(candidate.id)">Voted</span>
+                          <span v-else>Vote</span>
+                        </button>
                       </div>
                     </div>
                   </div>
                 </div>
-              {% endraw %}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    {% endfor %}
+    {% endraw %}
   </div>
 
   <footer class="footer">
@@ -176,6 +188,8 @@
 {% block scripts %}
   <script type="text/javascript">
     var user = {{ user | json | safe }}
+
+    var categories = {{ categories | json | safe }}
 
     var candidates = {{ candidates | json | safe }}
 </script>

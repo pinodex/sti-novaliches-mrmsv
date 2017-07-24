@@ -47,6 +47,10 @@ let app = new Vue({
       this.user = user
     }
 
+    if ('categories' in window && window.categories) {
+      this.categories = categories
+    }
+
     if ('candidates' in window && window.candidates) {
       this.candidates = candidates
     }
@@ -70,6 +74,7 @@ let app = new Vue({
 
       user: null,
 
+      categories: [],
       candidates: [],
 
       form: {

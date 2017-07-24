@@ -1,6 +1,7 @@
 'use strict'
 
 const Candidate = use('App/Model/Candidate'),
+      Category = use('App/Model/Category'),
       shuffle = require('knuth-shuffle').knuthShuffle
 
 class VoteResult {
@@ -26,6 +27,24 @@ class VoteResult {
         thumb_path: candidate.thumb_path,
         picture_path: candidate.picture_path,
         votes: totalVotes
+      })
+    })
+
+    shuffle(result)
+
+    return result
+  }
+
+  static * getCategories () {
+    const categories = yield Category.all()
+
+    let result = []
+
+    categories.each(category => {
+      result.push({
+        id: category.id,
+        name: category.name,
+        is_active: category.is_active
       })
     })
 

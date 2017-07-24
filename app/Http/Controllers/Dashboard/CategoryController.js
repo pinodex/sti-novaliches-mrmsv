@@ -37,9 +37,7 @@ class CategoryController {
     if (request.method() == 'POST') {
       const data = request.only([
         'name',
-        'username',
-        'password',
-        'password_confirm',
+        'is_active'
       ])
 
       const validation = yield Validator.validate(data, Category.rules(model.id), Category.validationMessages)
