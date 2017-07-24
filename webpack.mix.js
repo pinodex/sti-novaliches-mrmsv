@@ -31,3 +31,7 @@ mix
   .disableNotifications()
   .setPublicPath('public')
   .options(options)
+
+if (mix.inProduction()) {
+  mix.version()
+}
