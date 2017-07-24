@@ -133,6 +133,12 @@ body {
         &.is-selected {
             outline: 1px solid #23d160;
         }
+
+        &.is-disabled {
+          .image img {
+            filter: grayscale(100%);
+          }
+        }
     }
 }
 

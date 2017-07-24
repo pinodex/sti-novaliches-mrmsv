@@ -102,7 +102,11 @@
               v-for="candidate in candidates"
               v-if="candidate.category_id == category.id">
 
-              <div class="card candidate" :class="{ 'is-selected': isVoted(candidate.id) }">
+              <div class="card candidate" :class="{
+                'is-selected': isVoted(candidate.id),
+                'is-disabled': user && isCategoryTaken(candidate.category_id) && !isVoted(candidate.id)
+              }">
+
                 <div class="card-image">
                   <figure class="image is-1by1">
                     <img :src="'/storage/' + candidate.picture_path" alt="Image" />
