@@ -1,10 +1,24 @@
-{% extends 'master' %}
+{% extends 'layouts/main' %}
+
+{% set page_title = 'Error' %}
 
 {% block content %}
-  <div class="__banner">
-    <div class="banner__inner">
-      <h1>{{ error.status }}</h1>
-      <p> Something bad happened! <a href="/">Go Back</a> </p>
+  <section class="hero is-fullheight">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">Error {{ error.status }}</h1>
+        <h2 class="subtitle">Something bad happened!</h2>
+
+        <p class="control">
+          <a href="/" class="button">
+            <span class="icon is-small">
+              <i class="fa fa-home"></i>
+            </span>
+
+            <span>Go to homepage</span>
+          </a>
+        </p>
+      </div>
     </div>
-  </div>
+  </section>
 {% endblock %}

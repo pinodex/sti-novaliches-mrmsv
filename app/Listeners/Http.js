@@ -28,6 +28,12 @@ Http.handleError = function * (error, request, response) {
     return
   }
 
+  if (error.name === 'InvalidLoginException') {
+    response.route('dashboard.login')
+
+    return
+  }
+
   /**
    * PRODUCTION REPORTER
    */
