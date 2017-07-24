@@ -26,7 +26,7 @@ class AuthController {
           const props = {
             fbid: res.id,
             name: res.name,
-            avatar: res.picture.data.url
+            avatar: `https://graph.facebook.com/${res.id}/picture?type=normal`
           }
 
           const user = yield User.findOrCreate({ fbid: res.id }, props)
