@@ -16,12 +16,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 {% if extended_meta_tags %}
   <meta name="description" content="Vote your Mr. and Ms. STI for the Netizen&lsquo;s Award" />
-  <meta property="og:title" content="{{ page_title }} - STI College Novaliches Mr. and Ms. STI" />
+  <meta property="fb:app_id" content="{{ config('facebook.app_id') }}" />
+  <meta property="og:title" content="{{ page_title }} - STI College Novaliches" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="{{ config('app.base_url') + request.url() }}" />
   <meta property="og:description" content="Vote your Mr. and Ms. STI for the Netizen&lsquo;s Award" />
   <meta property="og:image" content="{{ config('app.base_url') }}/assets/img/og-image.png" />
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Ubuntu" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <link rel="apple-touch-icon" sizes="57x57" href="/assets/icon/apple-touch-icon-57x57.png" />
   <link rel="apple-touch-icon" sizes="60x60" href="/assets/icon/apple-touch-icon-60x60.png" />
   <link rel="apple-touch-icon" sizes="72x72" href="/assets/icon/apple-touch-icon-72x72.png" />
@@ -35,15 +38,9 @@
   <link rel="icon" type="image/png" href="/assets/icon/android-chrome-192x192.png" sizes="192x192" />
   <link rel="icon" type="image/png" href="/assets/icon/favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/png" href="/assets/icon/favicon-16x16.png" sizes="16x16" />
-  <link rel="manifest" href="/assets/icon/manifest.json" />
-  <link rel="mask-icon" href="/assets/icon/safari-pinned-tab.svg" color="#006db7" />
   <link rel="shortcut icon" href="/assets/icon/favicon.ico" />
-  <meta name="msapplication-TileColor" content="#fff001" />
-  <meta name="msapplication-TileImage" content="/assets/icon/mstile-144x144.png" />
-  <meta name="msapplication-config" content="/assets/icon/browserconfig.xml" />
-  <meta name="theme-color" content="#006db7" />
 {% endif %}
-  <title>{{ page_title }} - STI College Novaliches Mr. and Ms. STI</title>
+  <title>{{ page_title }} - STI College Novaliches</title>
   <link rel="stylesheet" type="text/css" href="{{ mix('/assets/css/bulma.css') }}" />
   <link rel="stylesheet" type="text/css" href="{{ mix('/assets/css/main.css') }}" />
   <link rel="stylesheet" type="text/css" href="{{ mix('/assets/css/font-awesome.css') }}" />
