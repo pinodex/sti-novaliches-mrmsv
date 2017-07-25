@@ -16,11 +16,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 {% if extended_meta_tags %}
   <meta name="description" content="Vote your Mr. and Ms. STI for the Netizen&lsquo;s Award" />
-  <meta property="og:title" content="{{ page_title }} - STI College Novaliches Mr. and Ms. STI" />
+  <meta property="fb:app_id" content="{{ config('facebook.app_id') }}" />
+  <meta property="og:title" content="{{ page_title }} - STI College Novaliches" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="{{ config('app.base_url') + request.url() }}" />
   <meta property="og:description" content="Vote your Mr. and Ms. STI for the Netizen&lsquo;s Award" />
   <meta property="og:image" content="{{ config('app.base_url') }}/assets/img/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Ubuntu" />
   <link rel="apple-touch-icon" sizes="57x57" href="/assets/icon/apple-touch-icon-57x57.png" />
   <link rel="apple-touch-icon" sizes="60x60" href="/assets/icon/apple-touch-icon-60x60.png" />
@@ -43,7 +47,7 @@
   <meta name="msapplication-config" content="/assets/icon/browserconfig.xml" />
   <meta name="theme-color" content="#006db7" />
 {% endif %}
-  <title>{{ page_title }} - STI College Novaliches Mr. and Ms. STI</title>
+  <title>{{ page_title }} - STI College Novaliches</title>
   <link rel="stylesheet" type="text/css" href="{{ mix('/assets/css/bulma.css') }}" />
   <link rel="stylesheet" type="text/css" href="{{ mix('/assets/css/main.css') }}" />
   <link rel="stylesheet" type="text/css" href="{{ mix('/assets/css/font-awesome.css') }}" />
