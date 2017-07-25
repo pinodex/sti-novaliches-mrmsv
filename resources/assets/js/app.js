@@ -73,12 +73,6 @@ let app = new Vue({
 
         if (connected) {
           this.ws.connected = true
-
-          this.$snackbar.open({
-            message: 'Connected to server',
-            type: 'is-info',
-            duration: 5000
-          })
         }
       })
 
@@ -133,7 +127,7 @@ let app = new Vue({
       },
 
       ws: {
-        connected: false
+        connected: true
       }
     }
   },
