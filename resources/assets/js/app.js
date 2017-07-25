@@ -54,6 +54,54 @@ let app = new Vue({
     if ('candidates' in window && window.candidates) {
       this.candidates = candidates
     }
+
+    if ('connect' in window && window.connect) {
+      this.$client = this.$io.channel('result')
+
+      this.$client.connect((error, connected) => {
+        if (error) {
+          this.ws.connected = false
+
+          this.$snackbar.open({
+            message: 'Cannot connect to server. Live vote count will not work.',
+            type: 'is-danger',
+            duration: 5000
+          })
+
+          return
+        }
+
+        if (connected) {
+          this.ws.connected = true
+
+          this.$snackbar.open({
+            message: 'Connected to server',
+            type: 'is-info',
+            duration: 5000
+          })
+        }
+      })
+
+      this.$client.on('candidates', data => {
+        this.candidates = data
+      })
+
+      this.$client.on('candidate.voted', id => {
+        let index = this.candidates.findIndex(candidate => candidate.id == id)
+
+        if (index > -1) {
+          this.candidates[index].votes++
+        }
+      })
+
+      this.$client.on('categories.update', data => {
+        this.categories = data
+      })
+
+      this.$client.on('candidates.update', data => {
+        this.candidates = data
+      })
+    }
   },
 
   data: function () {
@@ -82,44 +130,15 @@ let app = new Vue({
         disabled: false,
         errors: false,
         image: null
+      },
+
+      ws: {
+        connected: false
       }
     }
   },
 
   methods
-})
-
-app.$client = app.$io.channel('result')
-
-app.$client.connect((error, connected) => {
-  if (error) {
-    this.$toast.open('Cannot connect to server. Please try again', {
-      type: 'is-danger',
-      duration: 5000
-    })
-
-    return
-  }
-})
-
-app.$client.on('candidates', data => {
-  app.candidates = data
-})
-
-app.$client.on('candidate.voted', id => {
-  let index = app.candidates.findIndex(candidate => candidate.id == id)
-
-  if (index > -1) {
-    app.candidates[index].votes++
-  }
-})
-
-app.$client.on('categories.update', data => {
-  app.categories = data
-})
-
-app.$client.on('candidates.update', data => {
-  app.candidates = data
 })
 
 let pageSelector = document.getElementById('page-selector')

@@ -110,10 +110,13 @@
                 <div class="card-image">
                   <figure class="image is-1by1">
                     <img :src="'/storage/' + candidate.picture_path" alt="Image" />
-                    <span class="tag vote-count" :class="{
-                      'is-light': candidate.votes == 0,
-                      'is-info': candidate.votes > 0,
-                      'is-success': isVoted(candidate.id) }">
+                    <span class="tag vote-count"
+                      v-show="ws.connected"
+                      :class="{
+                        'is-light': candidate.votes == 0,
+                        'is-info': candidate.votes > 0,
+                        'is-success': isVoted(candidate.id) }
+                      ">
 
                         <span>{{ candidate.votes }}&nbsp;</span>
                         <span v-if="candidate.votes == 1">vote</span>
@@ -191,6 +194,8 @@
 
 {% block scripts %}
   <script type="text/javascript">
+    var connect = true
+
     var user = {{ user | json | safe }}
 
     var categories = {{ categories | json | safe }}
