@@ -8,6 +8,7 @@ import Vue from 'vue'
 import Buefy from 'buefy'
 import axios from 'axios'
 
+import numeral from 'numeral'
 import io from 'adonis-websocket-client'
 import qs from 'qs'
 
@@ -37,6 +38,10 @@ Vue.use(Buefy, {
 })
 
 Vue.use(Ws, window.location.origin, {})
+
+Vue.filter('format', value => {
+  return numeral(value).format('0,0')
+})
 
 let app = new Vue({
   el: '#app',
@@ -85,6 +90,12 @@ let app = new Vue({
 
         if (index > -1) {
           this.candidates[index].votes++
+
+          this.candidates[index].pulse = true
+
+          setTimeout(() => {
+            this.candidates[index].pulse = false
+          }, 1000)
         }
       })
 
