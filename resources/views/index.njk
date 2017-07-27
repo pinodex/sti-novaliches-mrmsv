@@ -113,12 +113,13 @@
                     <span class="tag vote-count"
                       v-show="ws.connected"
                       :class="{
+                        'pulse': candidate.pulse,
                         'is-light': candidate.votes == 0,
                         'is-info': candidate.votes > 0,
                         'is-success': isVoted(candidate.id) }
                       ">
 
-                        <span>{{ candidate.votes }}&nbsp;</span>
+                        <span>{{ candidate.votes | format }}&nbsp;</span>
                         <span v-if="candidate.votes == 1">vote</span>
                         <span v-else>votes</span>
                       </span>

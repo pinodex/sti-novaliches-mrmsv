@@ -371,10 +371,32 @@ body {
     position: absolute;
     bottom: 5px;
     right: 5px;
+
+    &.pulse {
+      animation: pulse 1s;
+    }
 }
 
 .vote-button.is-success {
     pointer-events: none;
+}
+
+/**
+ * Animations
+ */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.75);
+    background: rgb(244, 67, 54);
+  }
+
+  70% {
+      box-shadow: 0 0 0 20px rgba(244, 67, 54, 0);
+  }
+
+  100% {
+      box-shadow: 0 0 0 0 rgba(244, 67, 54, 0);
+  }
 }
 
 /**

@@ -26,7 +26,8 @@ class VoteResult {
         name: candidate.name,
         thumb_path: candidate.thumb_path,
         picture_path: candidate.picture_path,
-        votes: totalVotes
+        votes: totalVotes,
+        pulse: false
       })
     })
 

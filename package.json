@@ -38,7 +38,8 @@
     "mysql": "^2.13.0",
     "qs": "^6.5.0",
     "youch": "^2.0.4",
-    "cross-env": "^5.0.1"
+    "cross-env": "^5.0.1",
+    "co": "^4.6.0"
   },
   "standard": {
     "global": [
@@ -50,14 +51,14 @@
     "App": "./app"
   },
   "devDependencies": {
-    "bulma": "^0.4.3",
-    "laravel-mix": "^1.2.2",
-    "font-awesome": "^4.7.0",
-    "nodemon": "^1.11.0",
-    "standard": "^10.0.1",
-    "vue": "^2.4.1",
     "axios": "^0.16.2",
     "buefy": "^0.4.5",
-    "co": "^4.6.0"
+    "bulma": "^0.4.3",
+    "font-awesome": "^4.7.0",
+    "laravel-mix": "^1.2.2",
+    "nodemon": "^1.11.0",
+    "numeral": "^2.0.6",
+    "standard": "^10.0.1",
+    "vue": "^2.4.1"
   }
 }
