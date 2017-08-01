@@ -26,6 +26,18 @@ Route
   .as('vote')
   .middleware('auth:user')
 
+Route.group('docs', () => {
+
+  Route
+    .get('/terms-of-service', 'DocsController.termsOfService')
+    .as('docs.tos')
+
+  Route
+    .get('/privacy-policy', 'DocsController.privacyPolicy')
+    .as('docs.pp')
+
+}).prefix('docs')
+
 Route.group('auth', () => {
 
   Route
