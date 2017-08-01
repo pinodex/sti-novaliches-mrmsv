@@ -46,10 +46,13 @@ Http.handleError = function * (error, request, response) {
  * starting http server.
  */
 Http.onStart = function () {
-  const Helpers = use('Helpers')
-  const Config = use('Config')
-  const Route = use('Route')
-  const View = use('View')
+  const Helpers = use('Helpers'),
+        Config = use('Config'),
+        Route = use('Route'),
+        View = use('View')
+
+  const manifest = require(path.join(Helpers.publicPath(), 'mix-manifest.json')),
+        cdnBase = Env.get('CDN_BASE')
 
   View.global('url', (route, data) => {
     data = data || {}
@@ -76,8 +79,18 @@ Http.onStart = function () {
       return
     }
 
-    const manifest = require(path.join(Helpers.publicPath(), 'mix-manifest.json'))
+    if (Env.get('NODE_ENV') === 'production') {
+      return `${cdnBase}${manifest[text]}`
+    }
 
     return manifest[text]
+  })
+
+  View.global('asset', file => {
+    if (Env.get('NODE_ENV') === 'production') {
+      return `${cdnBase}${file}`
+    }
+
+    return file
   })
 }
