@@ -1,0 +1,84 @@
+{% extends '../layouts/main' %}
+
+{% set page_title = 'Terms Of Service' %}
+{% set body_class = 'main-page' %}
+
+{% block content %}
+  <section class="hero is-dark is-bold has-contents-below">
+    <div class="hero-body">
+      <div class="container">
+        <div class="level">
+          <div class="level-left">
+            <div class="media site-header">
+              <div class="media-left">
+                <figure class="image">
+                  <img src="/assets/img/logo-100.png" alt="Logo" />
+                </figure>
+              </div>
+
+              <div class="media-content">
+                <h1 class="title">Mr. and Ms. STI 2017</h1>
+                <h2 class="subtitle">Vote for Netizen&lsquo;s Choice Award</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="level-right"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container has-contents-below">
+    <div class="field">
+      <p class="control">
+        <a href="/" class="button is-small">
+          <span class="icon is-small">
+            <i class="fa fa-chevron-left"></i>
+          </span>
+
+          <span>Back to homepage</span>
+        </a>
+      </p>
+    </div>
+
+    <div class="columns">
+      <div class="column is-6">
+        <div class="content">
+          <h1 class="title">Privacy Policy</h1>
+
+          <p></p>
+
+          <p>Your privacy is important to us.</p>
+
+          <p>It is STI College Novaliches&lsquo; policy to respect your privacy regarding any information we may collect while operating our website. Accordingly, we have developed this privacy policy in order for you to understand how we collect, use, communicate, disclose and otherwise make use of personal information. We have outlined our privacy policy below.</p>
+
+          <ul>
+            <li>We will collect personal information by lawful and fair means and, where appropriate, with the knowledge or consent of the individual concerned.</li>
+            <li>Before or at the time of collecting personal information, we will identify the purposes for which information is being collected.</li>
+            <li>We will collect and use personal information solely for fulfilling those purposes specified by us and for other ancillary purposes, unless we obtain the consent of the individual concerned or as required by law.</li>
+            <li>Personal data should be relevant to the purposes for which it is to be used, and, to the extent necessary for those purposes, should be accurate, complete, and up-to-date.</li>
+            <li>We will protect personal information by using reasonable security safeguards against loss or theft, as well as unauthorized access, disclosure, copying, use or modification.</li>
+            <li>We will make readily available to customers information about our policies and practices relating to the management of personal information.</li>
+            <li>We will only retain personal information for as long as necessary for the fulfilment of those purposes.</li>
+          </ul>
+
+          <p>We are committed to conducting our business in accordance with these principles in order to ensure that the confidentiality of personal information is protected and maintained. STI College Novaliches may change this privacy policy from time to time at STI College Novaliches&lsquo; sole discretion.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <p>STI College Novaliches</p>
+        <p>
+          <a href="{{ route('docs.tos') }}">Terms of Service</a>
+          <span>&bullet;</span>
+          <a href="{{ route('docs.pp') }}">Privacy Policy</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+{% endblock %}
