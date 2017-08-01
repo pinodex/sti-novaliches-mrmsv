@@ -109,7 +109,7 @@
 
                 <div class="card-image">
                   <figure class="image is-1by1">
-                    <img :src="'/storage/' + candidate.picture_path" alt="Image" />
+                    <img :src="candidate.picture_path" alt="Image" />
                     <span class="tag vote-count"
                       v-show="ws.connected"
                       :class="{

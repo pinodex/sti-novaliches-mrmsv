@@ -1,6 +1,7 @@
 'use strict'
 
-const Candidate = use('App/Model/Candidate'),
+const Env = use('Env'),
+      Candidate = use('App/Model/Candidate'),
       Category = use('App/Model/Category'),
       shuffle = require('knuth-shuffle').knuthShuffle
 
@@ -20,12 +21,18 @@ class VoteResult {
         totalVotes = candidate.relations.votes.size()
       }
 
+      let pathPrefix = '/storage/'
+
+      if (Env.get('NODE_ENV') === 'production') {
+        pathPrefix = Env.get('CDN_BASE') + '/storage/'
+      }
+
       result.push({
         id: candidate.id,
         category_id: candidate.category_id,
         name: candidate.name,
-        thumb_path: candidate.thumb_path,
-        picture_path: candidate.picture_path,
+        thumb_path: pathPrefix + candidate.thumb_path,
+        picture_path: pathPrefix + candidate.picture_path,
         votes: totalVotes,
         pulse: false
       })
